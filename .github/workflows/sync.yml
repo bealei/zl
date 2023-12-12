@@ -1,8 +1,9 @@
 # Simple workflow for deploying static content to GitHub Pages
 # name: Deploy static content to Pages
-name: zidingyi
+name: 镜像仓库到 Gitee
 on:
   # Runs on pushes targeting the default branch
+  # 在针对默认分支的推送上运行
   push:
     branches: ["master"]
 
@@ -23,6 +24,7 @@ concurrency:
 
 jobs:
   # Single deploy job since we're just deploying
+  # 单一部署作业，因为我们只是在部署
   deploy:
     environment:
       name: github-pages
@@ -44,17 +46,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # - name: Sync to Gitee
-      #   uses: wearerequired/git-mirror-action@master
-      #   env:
-      #     # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
-      #     SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
-      #   with:
-      #     # 注意替换为你的 GitHub 源仓库地址
-      #     source-repo: git@github.com:bealei/zl.git
-      #     # 注意替换为你的 Gitee 目标仓库地址.
-      #     destination-repo: git@gitee.com:bealei/zl.git
-
+      # 同步代码 gitee
+      - name: Sync to Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
+        with:
+          # 注意替换为你的 GitHub 源仓库地址
+          source-repo: git@github.com:bealei/zl.git
+          # 注意替换为你的 Gitee 目标仓库地址.
+          destination-repo: git@gitee.com:bealei/zl.git
+# 构建 gitee page
       - name: Build Gitee Pages
         uses: yanglbme/gitee-pages-action@main
         with:
